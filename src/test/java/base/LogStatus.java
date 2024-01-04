@@ -96,6 +96,7 @@ public class LogStatus {
                 BaseTest.test.log(Status.PASS, "Progress:" + title.getContinueWatching().getProgress().getPercentage());
             } else {
                 BaseTest.test.log(Status.FAIL, "");
+
             }
 
         } else {

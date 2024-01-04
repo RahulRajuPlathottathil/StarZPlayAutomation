@@ -62,7 +62,7 @@ public class Page {
         private Products products;
         @JsonIgnore
         private Licence license;
-
+//Add
         @Data
         public static class Media {
             private int duration;
