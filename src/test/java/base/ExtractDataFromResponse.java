@@ -12,6 +12,7 @@ import com.aventstack.extentreports.Status;
 import pojo.LayoutModel.Layout;
 import pojo.LayoutModel.Module;
 import pojo.Page;
+import utility.PropertyReader;
 
 
 public class ExtractDataFromResponse {
@@ -34,10 +35,17 @@ public class ExtractDataFromResponse {
 				int layoutModulesItems = layoutmodule.getItems();
 
 				Page pageModule = findModuleFromModuleResponse(pages, layoudModuleID);
-				BaseTest.test.info("<div style=\"background-color: #ffcc00; width: 200px; height: 20px;\">" + layoutModuleCategory + "</tr>");
+
+				if( PropertyReader.getProperty("isPassReportEnabled").trim().equals("true"))
+				  BaseTest.test.info("<div style=\"background-color: #ffcc00; width: 200px; height: 20px;\">" + layoutModuleCategory + "</tr>");
 				if(layoutModuleCategory.trim().equals("ListBrandsActive")){
 					Status status=(layoutModulesItems==0) ?Status.PASS:Status.FAIL;
-					BaseTest.test.log(status,"Field :"+layoutModuleCategory+" validation Items count="+layoutModulesItems);
+					if(status.equals(Status.PASS) ) {
+						if (PropertyReader.getProperty("isPassReportEnabled").trim().equals("true"))
+							BaseTest.test.log(Status.PASS, "Field :" + layoutModuleCategory + " validation Items count=" + layoutModulesItems);
+					}
+					else
+						BaseTest.test.log(Status.FAIL, "Field :" + layoutModuleCategory + " validation Items count=" + layoutModulesItems);
 				}
 				long pageID = pageModule.getId();
 				List<Page.Title> moduleTitles = pageModule.getTitles();
@@ -45,6 +53,7 @@ public class ExtractDataFromResponse {
 				for (Page.Title moduleTitle : moduleTitles) {
 					String pageModuletitle = moduleTitle.getTitle();
 					long pageModuleTitleId = moduleTitle.getId();
+					if (PropertyReader.getProperty("isPassReportEnabled").trim().equals("true"))
 					BaseTest.test.info("Title : " + pageModuletitle + "  Module ID : " + pageModuleTitleId);
 					List<String> adsCountryRight = moduleTitle.getAdsCountryRights();
 					List<String> contentOwnership = moduleTitle.getContentOwnership();
