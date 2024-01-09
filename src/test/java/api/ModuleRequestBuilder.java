@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 
-
-
+import base.BaseTest;
+import com.aventstack.extentreports.Status;
 import io.restassured.RestAssured;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
 import pojo.Page;
 import utility.DirectoryLookUP;
 import utility.PropertyReader;
@@ -82,8 +83,12 @@ public class ModuleRequestBuilder {
 			e.printStackTrace();
 		}
 		// System.out.println(response.asPrettyString());
-
+		Assert.assertTrue(!response.then().extract().response().jsonPath().getString("description").contains("Token Mismatch"),"Token Mismatch in module call response");
 		List<Page> module = (List<Page>) response.then().extract().response().jsonPath().getList("", Page.class);
+		if(response.getStatusCode()!=200 || (module.size()==0) )
+		BaseTest.test.log(Status.FAIL,"Module Call is not  successfull");
+		Assert.assertEquals(response.getStatusCode(),200,"Status Code");
+		Assert.assertTrue(module.size()>0,"Module Size "+module.size());
 		return module;
 	}
 

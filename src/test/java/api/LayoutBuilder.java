@@ -1,9 +1,12 @@
 package api;
 import DataLogics.ImageLogic;
+import base.BaseTest;
+import com.aventstack.extentreports.Status;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import org.testng.Assert;
 import pojo.LayoutModel.Layout;
 import utility.DirectoryLookUP;
 import utility.PropertyReader;
@@ -74,6 +77,11 @@ public class LayoutBuilder {
         }
         System.out.println(layout.getxToken());
         System.out.println(layout.getxQuery());
+        if(response.getStatusCode()!=200 || (layout.getxToken().length()==0) || layout.getTotal()==0)
+        BaseTest.test.log(Status.FAIL,"Layout call is not successfully");
+        Assert.assertEquals(response.getStatusCode(),200,"Status Code");
+        Assert.assertTrue(layout.getxToken().length()>0,"Tocken Maching ");
+        Assert.assertTrue(layout.getTotal()>0,"Layout Total");
         return layout;
     }
 

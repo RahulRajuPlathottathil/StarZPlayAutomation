@@ -24,7 +24,10 @@ public class ExtractDataFromResponse {
 			layouts = World.getLayout();
 			List<Module> layoutModules = layouts.getModules();
 			List<Page> pages = World.getMovie();
-
+			System.out.println("Page:  "+pages);
+            if(pages.size()==0){
+				BaseTest.test.log(Status.FAIL,"No Page");
+			}
 			layoutModules.forEach(layoutmodule -> {
 				Map<String, Object> layoutModuleMap = new LinkedHashMap<>();
 				Map<String, Object> pageModuleTitleMap = new LinkedHashMap<>();

@@ -7,6 +7,7 @@ import api.ModuleRequestBuilder;
 import api.World;
 import base.BaseTest;
 import base.ExtractDataFromResponse;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pojo.LayoutModel.Layout;
 import pojo.Page;
@@ -15,6 +16,8 @@ import utility.PropertyReader;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
+@Listeners(TestListener.class)
+
 
 public class TestHere extends BaseTest {
     String methodName;
