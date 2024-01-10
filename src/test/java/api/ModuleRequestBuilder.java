@@ -33,7 +33,7 @@ public class ModuleRequestBuilder {
 	}
 
 	public ModuleRequestBuilder setBaserURI() {
-		RestAssured.baseURI = "https://sp-new-api.aws.playco.com/api/v1.1/";
+		RestAssured.baseURI =  PropertyReader.getBaseURI();//"https://sp-new-api.aws.playco.com/api/v1.1/";
 		requestSpecification = RestAssured.given();
 		return this;
 	}
